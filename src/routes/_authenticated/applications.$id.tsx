@@ -30,7 +30,7 @@ function Detail() {
   const refresh = () => { qc.invalidateQueries({ queryKey: ["monitor", id] }); qc.invalidateQueries({ queryKey: ["monitors"] }); };
   async function check() { setBusy(true); try { const r = await run({ data: { monitorId: id } }); r.ok ? toast.success(`OK — ${r.status_code} en ${r.response_ms} ms`) : toast.error(r.error ?? "Échec"); refresh(); } catch (e) { toast.error(e instanceof Error ? e.message : "Erreur"); } finally { setBusy(false); } }
   async function toggle(v: boolean) { const { error } = await supabase.from("monitors").update({ enabled: v }).eq("id", id); error ? toast.error(error.message) : refresh(); }
-  async function remove() { if (!confirm("Supprimer cette application et son historique ?")) return; const { error } = await supabase.from("monitors").delete().eq("id", id); if (error) return toast.error(error.message); navigate({ to: "/applications" }); }
+  async function remove() { if (!confirm("Supprimer cette application et son historique ?")) return; const { error } = await supabase.from("monitors").delete().eq("id", id); if (error) { toast.error(error.message); return; } navigate({ to: "/applications" }); }
   const chart = [...cs].reverse().map((c) => ({ t: new Date(c.checked_at).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" }), ms: c.response_ms }));
   return (
     <div>
@@ -55,7 +55,7 @@ function Detail() {
           <div className="max-h-96 divide-y overflow-y-auto">{cs.map((c) => <div key={c.id} className="flex items-center gap-3 px-3 py-2 font-mono text-xs">
             <StatusDot status={c.ok ? "up" : "down"} /><span className="w-28 text-muted-foreground">{fmtDate(c.checked_at)}</span><span className="w-10">{c.status_code ?? "—"}</span><span className="w-16">{c.response_ms != null ? c.response_ms + " ms" : ""}</span><span className="truncate text-destructive">{c.error}</span></div>)}</div></div>
         <div className="rounded-lg border bg-card"><div className="border-b p-3 text-sm font-medium">Incidents</div>
-          <div className="divide-y">{data.incidents.map((x) => <Link key={x.id} to="/incidents/$id" params={{ id: x.id }} className="flex items-center gap-2 p-3 text-sm hover:bg-accent/40"><SeverityBadge s={x.severity} /><span className="flex-1 truncate">{x.title}</span><IncidentStatus s={x.status} /></Link>)}
+          <div className="divide-y">{data.incidents.map((x) => <Link key={x.id} to="/incident/$id" params={{ id: x.id }} className="flex items-center gap-2 p-3 text-sm hover:bg-accent/40"><SeverityBadge s={x.severity} /><span className="flex-1 truncate">{x.title}</span><IncidentStatus s={x.status} /></Link>)}
             {!data.incidents.length && <p className="p-3 text-sm text-muted-foreground">Aucun incident.</p>}</div></div>
       </div>
     </div>);

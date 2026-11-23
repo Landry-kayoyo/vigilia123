@@ -30,10 +30,10 @@ function AddDialog({ orgId }: { orgId: string }) {
   const [f, setF] = useState({ name: "", url: "https://", description: "", category: "", environment: "production", check_type: "http", http_method: "GET", expected_status: "200", expected_keyword: "", interval_minutes: "5" });
   const set = (k: keyof typeof f) => (v: string) => setF({ ...f, [k]: v });
   async function save() {
-    const p = schema.safeParse(f); if (!p.success) return toast.error("Vérifiez les champs : " + p.error.issues[0]?.path.join("."));
-    const v = await validate({ data: { url: p.data.url } }); if (!v.ok) return toast.error(v.error ?? "URL refusée");
+    const p = schema.safeParse(f); if (!p.success) { toast.error("Vérifiez les champs : " + p.error.issues[0]?.path.join(".")); return; }
+    const v = await validate({ data: { url: p.data.url } }); if (!v.ok) { toast.error(v.error ?? "URL refusée"); return; }
     const { error } = await supabase.from("monitors").insert({ ...p.data, org_id: orgId, description: p.data.description || null, category: p.data.category || null, expected_keyword: p.data.expected_keyword || null });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Application ajoutée"); setOpen(false); qc.invalidateQueries({ queryKey: ["monitors"] });
   }
   const sel = (k: keyof typeof f, opts: [string, string][]) => (

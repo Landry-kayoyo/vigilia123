@@ -12,10 +12,20 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAnalysisRouteImport } from './routes/_authenticated/analysis'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
+import { Route as AuthenticatedBillingRouteImport } from './routes/_authenticated/billing'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedGithubRouteImport } from './routes/_authenticated/github'
+import { Route as AuthenticatedIncidentsRouteImport } from './routes/_authenticated/incidents'
+import { Route as AuthenticatedIntegrationsRouteImport } from './routes/_authenticated/integrations'
+import { Route as AuthenticatedMonitoringRouteImport } from './routes/_authenticated/monitoring'
+import { Route as AuthenticatedOrganizationRouteImport } from './routes/_authenticated/organization'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedApplicationsIndexRouteImport } from './routes/_authenticated/applications.index'
 import { Route as AuthenticatedApplicationsIdRouteImport } from './routes/_authenticated/applications.$id'
+import { Route as AuthenticatedIncidentIdRouteImport } from './routes/_authenticated/incident.$id'
 import { Route as ApiPublicJobsRunChecksRouteImport } from './routes/api/public/jobs/run-checks'
 
 const IndexRoute = IndexRouteImport.update({
@@ -32,15 +42,62 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAnalysisRoute = AuthenticatedAnalysisRouteImport.update({
+  id: '/analysis',
+  path: '/analysis',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedApplicationsRoute =
   AuthenticatedApplicationsRouteImport.update({
     id: '/applications',
     path: '/applications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedBillingRoute = AuthenticatedBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedGithubRoute = AuthenticatedGithubRouteImport.update({
+  id: '/github',
+  path: '/github',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIncidentsRoute = AuthenticatedIncidentsRouteImport.update({
+  id: '/incidents',
+  path: '/incidents',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIntegrationsRoute =
+  AuthenticatedIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMonitoringRoute = AuthenticatedMonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOrganizationRoute =
+  AuthenticatedOrganizationRouteImport.update({
+    id: '/organization',
+    path: '/organization',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedApplicationsIndexRoute =
@@ -55,6 +112,11 @@ const AuthenticatedApplicationsIdRoute =
     path: '/$id',
     getParentRoute: () => AuthenticatedApplicationsRoute,
   } as any)
+const AuthenticatedIncidentIdRoute = AuthenticatedIncidentIdRouteImport.update({
+  id: '/incident/$id',
+  path: '/incident/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicJobsRunChecksRoute = ApiPublicJobsRunChecksRouteImport.update({
   id: '/api/public/jobs/run-checks',
   path: '/api/public/jobs/run-checks',
@@ -64,17 +126,37 @@ const ApiPublicJobsRunChecksRoute = ApiPublicJobsRunChecksRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/analysis': typeof AuthenticatedAnalysisRoute
   '/applications': typeof AuthenticatedApplicationsRouteWithChildren
+  '/billing': typeof AuthenticatedBillingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/github': typeof AuthenticatedGithubRoute
+  '/incidents': typeof AuthenticatedIncidentsRoute
+  '/integrations': typeof AuthenticatedIntegrationsRoute
+  '/monitoring': typeof AuthenticatedMonitoringRoute
+  '/organization': typeof AuthenticatedOrganizationRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/applications/$id': typeof AuthenticatedApplicationsIdRoute
+  '/incident/$id': typeof AuthenticatedIncidentIdRoute
   '/applications/': typeof AuthenticatedApplicationsIndexRoute
   '/api/public/jobs/run-checks': typeof ApiPublicJobsRunChecksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/analysis': typeof AuthenticatedAnalysisRoute
+  '/billing': typeof AuthenticatedBillingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/github': typeof AuthenticatedGithubRoute
+  '/incidents': typeof AuthenticatedIncidentsRoute
+  '/integrations': typeof AuthenticatedIntegrationsRoute
+  '/monitoring': typeof AuthenticatedMonitoringRoute
+  '/organization': typeof AuthenticatedOrganizationRoute
+  '/reports': typeof AuthenticatedReportsRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/applications/$id': typeof AuthenticatedApplicationsIdRoute
+  '/incident/$id': typeof AuthenticatedIncidentIdRoute
   '/applications': typeof AuthenticatedApplicationsIndexRoute
   '/api/public/jobs/run-checks': typeof ApiPublicJobsRunChecksRoute
 }
@@ -83,9 +165,19 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/analysis': typeof AuthenticatedAnalysisRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRouteWithChildren
+  '/_authenticated/billing': typeof AuthenticatedBillingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/github': typeof AuthenticatedGithubRoute
+  '/_authenticated/incidents': typeof AuthenticatedIncidentsRoute
+  '/_authenticated/integrations': typeof AuthenticatedIntegrationsRoute
+  '/_authenticated/monitoring': typeof AuthenticatedMonitoringRoute
+  '/_authenticated/organization': typeof AuthenticatedOrganizationRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/applications/$id': typeof AuthenticatedApplicationsIdRoute
+  '/_authenticated/incident/$id': typeof AuthenticatedIncidentIdRoute
   '/_authenticated/applications/': typeof AuthenticatedApplicationsIndexRoute
   '/api/public/jobs/run-checks': typeof ApiPublicJobsRunChecksRoute
 }
@@ -94,17 +186,37 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/analysis'
     | '/applications'
+    | '/billing'
     | '/dashboard'
+    | '/github'
+    | '/incidents'
+    | '/integrations'
+    | '/monitoring'
+    | '/organization'
+    | '/reports'
+    | '/settings'
     | '/applications/$id'
+    | '/incident/$id'
     | '/applications/'
     | '/api/public/jobs/run-checks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/analysis'
+    | '/billing'
     | '/dashboard'
+    | '/github'
+    | '/incidents'
+    | '/integrations'
+    | '/monitoring'
+    | '/organization'
+    | '/reports'
+    | '/settings'
     | '/applications/$id'
+    | '/incident/$id'
     | '/applications'
     | '/api/public/jobs/run-checks'
   id:
@@ -112,9 +224,19 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/analysis'
     | '/_authenticated/applications'
+    | '/_authenticated/billing'
     | '/_authenticated/dashboard'
+    | '/_authenticated/github'
+    | '/_authenticated/incidents'
+    | '/_authenticated/integrations'
+    | '/_authenticated/monitoring'
+    | '/_authenticated/organization'
+    | '/_authenticated/reports'
+    | '/_authenticated/settings'
     | '/_authenticated/applications/$id'
+    | '/_authenticated/incident/$id'
     | '/_authenticated/applications/'
     | '/api/public/jobs/run-checks'
   fileRoutesById: FileRoutesById
@@ -149,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/analysis': {
+      id: '/_authenticated/analysis'
+      path: '/analysis'
+      fullPath: '/analysis'
+      preLoaderRoute: typeof AuthenticatedAnalysisRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/applications': {
       id: '/_authenticated/applications'
       path: '/applications'
@@ -156,11 +285,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedApplicationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/billing': {
+      id: '/_authenticated/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof AuthenticatedBillingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/github': {
+      id: '/_authenticated/github'
+      path: '/github'
+      fullPath: '/github'
+      preLoaderRoute: typeof AuthenticatedGithubRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/incidents': {
+      id: '/_authenticated/incidents'
+      path: '/incidents'
+      fullPath: '/incidents'
+      preLoaderRoute: typeof AuthenticatedIncidentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/integrations': {
+      id: '/_authenticated/integrations'
+      path: '/integrations'
+      fullPath: '/integrations'
+      preLoaderRoute: typeof AuthenticatedIntegrationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/monitoring': {
+      id: '/_authenticated/monitoring'
+      path: '/monitoring'
+      fullPath: '/monitoring'
+      preLoaderRoute: typeof AuthenticatedMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/organization': {
+      id: '/_authenticated/organization'
+      path: '/organization'
+      fullPath: '/organization'
+      preLoaderRoute: typeof AuthenticatedOrganizationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/applications/': {
@@ -176,6 +361,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/applications/$id'
       preLoaderRoute: typeof AuthenticatedApplicationsIdRouteImport
       parentRoute: typeof AuthenticatedApplicationsRoute
+    }
+    '/_authenticated/incident/$id': {
+      id: '/_authenticated/incident/$id'
+      path: '/incident/$id'
+      fullPath: '/incident/$id'
+      preLoaderRoute: typeof AuthenticatedIncidentIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/jobs/run-checks': {
       id: '/api/public/jobs/run-checks'
@@ -204,13 +396,33 @@ const AuthenticatedApplicationsRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAnalysisRoute: typeof AuthenticatedAnalysisRoute
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRouteWithChildren
+  AuthenticatedBillingRoute: typeof AuthenticatedBillingRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedGithubRoute: typeof AuthenticatedGithubRoute
+  AuthenticatedIncidentsRoute: typeof AuthenticatedIncidentsRoute
+  AuthenticatedIntegrationsRoute: typeof AuthenticatedIntegrationsRoute
+  AuthenticatedMonitoringRoute: typeof AuthenticatedMonitoringRoute
+  AuthenticatedOrganizationRoute: typeof AuthenticatedOrganizationRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedIncidentIdRoute: typeof AuthenticatedIncidentIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAnalysisRoute: AuthenticatedAnalysisRoute,
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRouteWithChildren,
+  AuthenticatedBillingRoute: AuthenticatedBillingRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedGithubRoute: AuthenticatedGithubRoute,
+  AuthenticatedIncidentsRoute: AuthenticatedIncidentsRoute,
+  AuthenticatedIntegrationsRoute: AuthenticatedIntegrationsRoute,
+  AuthenticatedMonitoringRoute: AuthenticatedMonitoringRoute,
+  AuthenticatedOrganizationRoute: AuthenticatedOrganizationRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedIncidentIdRoute: AuthenticatedIncidentIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -7,7 +7,7 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YA
 
 export const Route = createFileRoute("/_authenticated/dashboard")({ component: Dashboard });
 
-function Stat({ label, value, tone }: { label: string; value: string | number; tone?: "ok" | "bad" }) {
+function Stat({ label, value, tone }: { label: string; value: string | number; tone?: "ok" | "bad" | undefined }) {
   return <div className="rounded-lg border bg-card p-4"><div className="text-xs text-muted-foreground">{label}</div>
     <div className={`mt-1 font-mono text-2xl ${tone === "ok" ? "text-success" : tone === "bad" ? "text-destructive" : ""}`}>{value}</div></div>;
 }
@@ -59,7 +59,7 @@ function Dashboard() {
         <div className="rounded-lg border bg-card p-4">
           <div className="mb-3 text-sm font-medium">Alertes récentes</div>
           <ul className="space-y-3">{inc.slice(0, 6).map((x) => (
-            <li key={x.id}><Link to="/incidents/$id" params={{ id: x.id }} className="block hover:opacity-80">
+            <li key={x.id}><Link to="/incident/$id" params={{ id: x.id }} className="block hover:opacity-80">
               <div className="flex items-center gap-2"><SeverityBadge s={x.severity} /><IncidentStatus s={x.status} /></div>
               <div className="mt-1 truncate text-sm">{x.title}</div><div className="text-xs text-muted-foreground">{fmtDate(x.started_at)}</div></Link></li>))}
             {!inc.length && <li className="text-sm text-muted-foreground">Aucune alerte.</li>}</ul>
